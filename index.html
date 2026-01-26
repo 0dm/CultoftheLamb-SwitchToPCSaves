@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cult of the Lamb - Switch to PC Save Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-decoration">
+        <div class="floating-symbol symbol-1">🐑</div>
+        <div class="floating-symbol symbol-2">⛧</div>
+        <div class="floating-symbol symbol-3">🌙</div>
+        <div class="floating-symbol symbol-4">👁️</div>
+        <div class="floating-symbol symbol-5">🕯️</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="lamb-icon">🐑</span>
+                <h1>Cult of the Lamb</h1>
+                <p class="subtitle">Switch → PC Save Converter</p>
+            </div>
+        </header>
+
+        <main>
+            <section class="info-card">
+                <h2>📜 How It Works</h2>
+                <ol>
+                    <li>Select your Switch save files (<code>meta_0</code>, <code>slot_0</code>, <code>slot_0MP</code>, etc.)</li>
+                    <li>The tool automatically detects the format (JSON or MessagePack)</li>
+                    <li>Removes the header bytes ("ZB" or "MP") and decompresses the GZIP data</li>
+                    <li>Downloads the converted files ready for PC</li>
+                </ol>
+                <div class="format-info">
+                    <div class="format-badge legacy">
+                        <strong>Legacy Saves</strong>
+                        <span><code>slot_0</code>, <code>meta_0</code> → <code>.json</code></span>
+                    </div>
+                    <div class="format-badge modern">
+                        <strong>New Saves (Woolhaven)</strong>
+                        <span><code>slot_0MP</code>, <code>meta_0MP</code> → <code>.mp</code></span>
+                    </div>
+                </div>
+                <p class="note">⚡ Everything runs locally in your browser - no data is uploaded anywhere!</p>
+            </section>
+
+            <section class="converter-card">
+                <h2>🔄 Convert Your Saves</h2>
+                
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-content">
+                        <span class="drop-icon">📁</span>
+                        <p>Drag & drop your Switch save files here</p>
+                        <p class="drop-hint">or click to browse</p>
+                        <input type="file" id="fileInput" multiple accept="*" hidden>
+                    </div>
+                </div>
+
+                <div class="file-list" id="fileList">
+                    <h3>Selected Files</h3>
+                    <ul id="selectedFiles"></ul>
+                </div>
+
+                <div class="button-group">
+                    <button id="convertBtn" class="btn btn-primary" disabled>
+                        <span class="btn-icon">✨</span>
+                        Convert & Download
+                    </button>
+                    <button id="clearBtn" class="btn btn-secondary" disabled>
+                        <span class="btn-icon">🗑️</span>
+                        Clear
+                    </button>
+                </div>
+
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">Processing...</p>
+                </div>
+
+                <div class="results" id="results">
+                    <h3>✅ Conversion Complete!</h3>
+                    <ul id="resultsList"></ul>
+                </div>
+            </section>
+
+            <section class="help-card">
+                <h2>❓ Need Help?</h2>
+                <details>
+                    <summary>Where do I find my Switch save files?</summary>
+                    <p>If using a Switch emulator (like Yuzu or Ryujinx), saves are typically located in the emulator's user data folder under the game's title ID. For actual Switch hardware, you'll need homebrew tools (JKSV, Checkpoint)to extract saves.</p>
+                </details>
+                <details>
+                    <summary>Where do I put the converted files on PC?</summary>
+                    <p>On Windows, PC saves are usually located at:<br>
+                    <code>%USERPROFILE%\AppData\LocalLow\Massive Monster\Cult Of The Lamb\saves\</code></p>
+                </details>
+                <details>
+                    <summary>Which files should I convert?</summary>
+                    <p><strong>New saves (2026 Woolhaven update):</strong> <code>slot_0MP</code>, <code>meta_0MP</code> - these contain your main save data in MessagePack format.<br><br>
+                    <strong>Legacy saves:</strong> <code>meta_0</code>, <code>slot_0</code>, <code>persistence</code>, <code>settings</code>, <code>Prefs.dict</code> - these are JSON format.<br><br>
+                    The tool auto-detects the format, so just drop all your save files in!</p>
+                </details>
+                <details>
+                    <summary>Something went wrong!</summary>
+                    <p>Make sure you're using the raw Switch save files (not already converted). Files should start with "ZB" (legacy JSON) or "MP" (new MessagePack) header bytes. If conversion fails, the file may already be in PC format or corrupted.</p>
+                </details>
+            </section>
+        </main>
+
+        <footer>
+            <p>Made with 🖤 for the Cult | Not affiliated with Massive Monster or Devolver Digital</p>
+            <p class="disclaimer">Make sure to backup your saves</p>
+            <div class="footer-links">
+                <a href="https://github.com/0dm/CultOfTheLamb-SwitchToPCSaves" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    GitHub
+                </a>
+                <a href="https://ko-fi.com/0dm" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/></svg>
+                    Ko-fi
+                </a>
+            </div>
+        </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
