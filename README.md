@@ -13,7 +13,7 @@ A browser-based tool to convert Cult of the Lamb save files from Nintendo Switch
 
 ## Usage
 
-1. Open `index.html` in any modern browser (or click the link on the side of this page)
+1. Open `index.html` in any modern browser (or click the link on the right, under About)
 2. Drag and drop your Switch save files (or click to browse)
 3. Click "Convert & Download"
 4. Place the converted files in your PC save folder
