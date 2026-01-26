@@ -40,3 +40,7 @@ A browser-based tool to convert Cult of the Lamb save files from Nintendo Switch
 ## Disclaimer
 
 Not affiliated with Massive Monster or Devolver Digital.
+
+## Important: Achievements
+
+Important: Achivements currently do not sync. I recommend using [Steam Achivement Manager](https://github.com/gibbed/SteamAchievementManager) to manually unlock achivements after moving to Steam.
