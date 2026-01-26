@@ -35,6 +35,7 @@ A browser-based tool to convert Cult of the Lamb save files from Nintendo Switch
 
 ## Support
 
+[Nexus Mods](https://www.nexusmods.com/cultofthelamb/mods/57)
 ☕ [Support on Ko-fi](https://ko-fi.com/0dm)
 
 ## Disclaimer
