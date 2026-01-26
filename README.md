@@ -43,4 +43,4 @@ Not affiliated with Massive Monster or Devolver Digital.
 
 ## Important: Achievements
 
-Important: Achivements currently do not sync. I recommend using [Steam Achivement Manager](https://github.com/gibbed/SteamAchievementManager) to manually unlock achivements after moving to Steam.
+Important: Achievements currently do not sync. I recommend using [Steam Achievement Manager](https://github.com/gibbed/SteamAchievementManager) to manually unlock achivements after moving to Steam.
