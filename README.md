@@ -44,6 +44,7 @@ Achievements currently do not sync. I recommend using [Steam Achievement Manager
 
 ## Support
 
+[Nexus Mods](https://www.nexusmods.com/cultofthelamb/mods/57)
 ☕ [Support on Ko-fi](https://ko-fi.com/0dm)
 
 ## Disclaimer
