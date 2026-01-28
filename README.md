@@ -2,7 +2,7 @@
 
 A browser-based tool to convert Cult of the Lamb save files from Nintendo Switch to PC format.
 
-## ⚠️ Important Support Notice
+## ⚠️ Important
 **This tool officially supports Legacy (JSON) Switch saves only.** While the tool *can* technically process newer Woolhaven (MP) saves, **they are not supported and will likely result in game-breaking bugs** on PC (e.g., time freezing, followers not moving, unable to save).
 
 ## Features
