@@ -1,6 +1,7 @@
 class SaveConverter {
     constructor() {
         this.files = new Map();
+        this.pendingFiles = null; // Temporary storage for files pending confirmation
         this.initElements();
         this.initEventListeners();
     }
@@ -17,6 +18,11 @@ class SaveConverter {
         this.progressText = document.getElementById('progressText');
         this.results = document.getElementById('results');
         this.resultsList = document.getElementById('resultsList');
+        
+        // Modal Elements
+        this.modal = document.getElementById('warningModal');
+        this.modalCancel = document.getElementById('modalCancelBtn');
+        this.modalProceed = document.getElementById('modalProceedBtn');
     }
 
     initEventListeners() {
@@ -27,6 +33,10 @@ class SaveConverter {
         this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
         this.convertBtn.addEventListener('click', () => this.convertFiles());
         this.clearBtn.addEventListener('click', () => this.clearFiles());
+
+        // Modal Listeners
+        this.modalCancel.addEventListener('click', () => this.hideModal(false));
+        this.modalProceed.addEventListener('click', () => this.hideModal(true));
     }
 
     handleDragOver(e) {
@@ -43,11 +53,45 @@ class SaveConverter {
         e.preventDefault();
         e.stopPropagation();
         this.dropZone.classList.remove('drag-over');
-        this.addFiles(e.dataTransfer.files);
+        this.checkAndAddFiles(e.dataTransfer.files);
     }
 
     handleFileSelect(e) {
-        this.addFiles(e.target.files);
+        this.checkAndAddFiles(e.target.files);
+    }
+
+    // New check to intercept MP files before they are added
+    checkAndAddFiles(fileList) {
+        let hasMpFile = false;
+        
+        for (const file of fileList) {
+            if (file.name.endsWith('MP') || file.name.endsWith('.mp')) {
+                hasMpFile = true;
+                break;
+            }
+        }
+
+        if (hasMpFile) {
+            this.pendingFiles = fileList;
+            this.showModal();
+        } else {
+            this.addFiles(fileList);
+        }
+    }
+
+    showModal() {
+        this.modal.classList.remove('hidden');
+    }
+
+    hideModal(proceed) {
+        this.modal.classList.add('hidden');
+        if (proceed && this.pendingFiles) {
+            this.addFiles(this.pendingFiles);
+        } else {
+            // Clear input so selecting the same file again works if they cancelled
+            this.fileInput.value = ''; 
+        }
+        this.pendingFiles = null;
     }
 
     addFiles(fileList) {
@@ -77,12 +121,17 @@ class SaveConverter {
         this.clearBtn.disabled = false;
 
         this.files.forEach((file, name) => {
+            const isRisky = name.endsWith('MP') || name.endsWith('.mp');
             const li = document.createElement('li');
+            
+            // Visual indicator for risky files in the list
+            if (isRisky) li.style.borderLeft = "3px solid var(--error-color)";
+
             li.innerHTML = `
                 <div class="file-info">
-                    <span class="file-icon">📄</span>
+                    <span class="file-icon">${isRisky ? '⚠️' : '📄'}</span>
                     <div>
-                        <div class="file-name">${this.escapeHtml(name)}</div>
+                        <div class="file-name" style="${isRisky ? 'color: var(--error-color)' : ''}">${this.escapeHtml(name)}</div>
                         <div class="file-size">${this.formatFileSize(file.size)}</div>
                     </div>
                 </div>
@@ -204,12 +253,19 @@ class SaveConverter {
 
                     let outputData;
                     if (format === 'mp') {
-                        outputData = dataWithoutHeader;
+                        // Attempt decompression even for unsupported MP files
+                        // because they are still Zlib compressed on Switch
+                        try {
+                            outputData = pako.inflate(dataWithoutHeader);
+                        } catch (e) {
+                            // Fallback if decompression fails
+                            outputData = dataWithoutHeader; 
+                        }
                     } else {
                         try {
                             outputData = pako.inflate(dataWithoutHeader);
                         } catch (inflateError) {
-                            throw new Error(`Failed to decompress: ${inflateError.message}. File may not be a valid Switch save.`);
+                            throw new Error(`Failed to decompress: ${inflateError.message}.`);
                         }
                     }
 
@@ -256,8 +312,10 @@ class SaveConverter {
             
             if (result.success) {
                 const outputFilename = this.getOutputFilename(result.name, result.data.format);
-                const formatLabel = result.data.isMessagePack ? '(MessagePack)' : '(JSON)';
+                const formatLabel = result.data.isMessagePack ? '(MP - UNSUPPORTED)' : '(JSON)';
                 li.textContent = `${result.name} → ${outputFilename} ${formatLabel}`;
+                // Highlight MP conversions in red even if "successful"
+                if(result.data.isMessagePack) li.style.color = "var(--error-color)";
             } else {
                 li.textContent = `${result.name}: ${result.error}`;
             }

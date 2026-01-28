@@ -1,22 +1,23 @@
 # Cult of the Lamb - Switch to PC Save Converter
 
-A browser-based tool to convert Cult of the Lamb save files from Nintendo Switch to PC format. Currently does not convert from PC to Switch, though this will likely be added in the future. 
+A browser-based tool to convert Cult of the Lamb save files from Nintendo Switch to PC format.
+
+## ⚠️ Important Support Notice
+**This tool officially supports Legacy (JSON) Switch saves only.** While the tool *can* technically process newer Woolhaven (MP) saves, **they are not supported and will likely result in game-breaking bugs** on PC (e.g., time freezing, followers not moving, unable to save).
 
 ## Features
 
 - **100% Client-Side** - No uploads, everything runs in your browser
-- **Auto-Detection** - Automatically detects JSON (legacy) or MessagePack (new) formats
+- **Auto-Detection** - Automatically detects JSON (legacy) format
 - **Drag & Drop** - Simple interface for converting multiple files at once
-- **Both Formats Supported**:
-  - Legacy saves (ZB header) → `.json` files
-  - New saves (MP header) → `.mp` files
 
 ## Usage
 
-1. Open `index.html` in any modern browser (or click the link on the right, under About)
-2. Drag and drop your Switch save files (or click to browse)
-3. Click "Convert & Download"
-4. Place the converted files in your PC save folder
+1. Open `index.html` in any modern browser.
+2. Drag and drop your Switch save files.
+3. **If you upload a modern (MP) save, you will receive a warning.**
+4. Click "Convert & Download".
+5. Place the converted files in your PC save folder.
 
 ### PC Save Location (Windows)
 ```
@@ -25,13 +26,21 @@ A browser-based tool to convert Cult of the Lamb save files from Nintendo Switch
 
 ## File Conversions
 
-| Switch File | → | PC File |
+| Switch File | Status | PC File |
 |------------|---|---------|
-| `slot_0MP` | → | `slot_0.mp` |
-| `meta_0MP` | → | `meta_0.mp` |
-| `slot_0` | → | `slot_0.json` |
-| `meta_0` | → | `meta_0.json` |
-| `persistence` | → | `persistence.json` |
+| `slot_0` | ✅ Supported | `slot_0.json` |
+| `meta_0` | ✅ Supported | `meta_0.json` |
+| `slot_0MP` | ❌ **Buggy / Unsupported** | `slot_0.mp` |
+
+## Important: Achievements
+
+Achievements currently do not sync. I recommend using [Steam Achievement Manager](https://github.com/gibbed/SteamAchievementManager) to manually unlock achievements after moving to Steam.
+
+## FAQ
+
+**Q: Why are MP saves not supported?** The PC version handles the binary structure of MessagePack files differently than the Switch version. Converting them often results in a "Zombie State" where the game loads, but time does not advance and scripts do not run.
+
+**Q: Can I convert MP saves anyway?** Yes, the tool allows you to bypass the warning, but your save file will likely be unplayable. We recommend only converting Legacy JSON saves.
 
 ## Support
 
@@ -39,8 +48,4 @@ A browser-based tool to convert Cult of the Lamb save files from Nintendo Switch
 
 ## Disclaimer
 
-Not affiliated with Massive Monster or Devolver Digital.
-
-## Important: Achievements
-
-Important: Achievements currently do not sync. I recommend using [Steam Achievement Manager](https://github.com/gibbed/SteamAchievementManager) to manually unlock achivements after moving to Steam.
+Not affiliated with Massive Monster or Devolver Digital. 
