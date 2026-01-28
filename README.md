@@ -42,11 +42,6 @@ Achievements currently do not sync. I recommend using [Steam Achievement Manager
 
 **Q: Can I convert MP saves anyway?** Yes, the tool allows you to bypass the warning, but your save file will likely be unplayable. We recommend only converting Legacy JSON saves.
 
-## Support
-
-[Nexus Mods](https://www.nexusmods.com/cultofthelamb/mods/57)
-☕ [Support on Ko-fi](https://ko-fi.com/0dm)
-
 ## Disclaimer
 
 Not affiliated with Massive Monster or Devolver Digital. 
